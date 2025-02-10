@@ -1,16 +1,16 @@
 Write a clear and enhanced version of the given text. Use the following guidelines for edits:
 
-1. **Add New Content**: Use `<insert [id]>[new content]</insert>` to add examples or additional sentences where indicated. For instance:
+1. **Add New Content**: Use `<insert [id]>[new content]</insert [id]>` to add examples or additional sentences where indicated. For instance:
    - `<insert 1>For example, drinking water, eating a balanced diet, and avoiding processed foods are effective ways to improve nutrition.</insert 1>`
    
-2. **Remove Existing Content**: Use `<insert [id]>[content to remove]</delete>` to delete phrases or sentences where specified. For example:
+2. **Remove Existing Content**: Use `<insert [id]>[content to remove]</delete [id]>` to delete phrases or sentences where specified. For example:
    - `<delete 2>good for overall well-being</delete 2>`
 
 3. **Replace Content**: Combine **delete** and **insert** tags to replace a phrase with more detailed information. For example:
    - `<delete 2>good for overall well-being</delete 2><insert 2>essential for improving immune function, energy levels, and mental clarity.</insert 2>`
 
-4. **no edit associated with the task**: Use `<noedit [id]>[Reason]<noedit>` to indicate that no edit is required for a specific task. For example:
-   - `<noedit 3>[No search text found]</noedit>`
+4. **no edit associated with the task**: Use `<noedit [id]>[Reason]<noedit [id]>` to indicate that no edit is required for a specific task. For example:
+   - `<noedit 3>[No search text found]</noedit 3>`
 
 5. If you want to insert newlines please do it withing <insert> tags. Ensure output doc is grounded onto the input doc.
 
@@ -33,12 +33,14 @@ Write a clear and enhanced version of the given text. Use the following guidelin
 #### Edits:
 Healthy eating is important for maintaining health. <insert 1>For example, drinking water, eating a balanced diet, and avoiding processed foods are effective ways to improve nutrition.</insert 1> Nutrition is <delete 2>good for overall well-being</delete 2><insert 2>essential for improving immune function, energy levels, and mental clarity.</insert 2> To start your journey to healthier eating, <insert 3>focus on small, achievable changes, such as swapping sugary snacks for fruits or adding more vegetables to your meals.</insert 3></noedit 4>[No excerpt mentions heart health]<noedit>
 
-Input Text:
+# Given:
+
+## Input Text:
 {{ text }}
 
-Instructions:
+## Tasks:
 {% for instruction in instructions %}
 - ID {{ instruction.id }}: {{ instruction.task }}
 {% endfor %}
 
-Enhanced Output:
+# Enhanced Output:
