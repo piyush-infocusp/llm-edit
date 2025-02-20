@@ -4,6 +4,10 @@ from jinja2 import Environment, FileSystemLoader
 import re
 import html
 from huggingface_hub import InferenceClient
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def load_dataset(path):
     dataset_container = []
@@ -14,7 +18,7 @@ def load_dataset(path):
 
 
 client = InferenceClient(
-	api_key=''
+	api_key= os.getenv("HF_ACCESS_TOKEN"),
 )
 
 
@@ -61,9 +65,10 @@ def sanitize_string(input_string):
     return sanitized
 
 def run_generation(models):
-    dataset_path = "/home/piyush.sar/Projects/LegalSifter/llm-edit/src/datasets/dataset.csv"
+    exp_name = "COEDITDATASET_prompt2"
+    dataset_path = "/home/piyush.sar/Projects/LegalSifter/llm-edit/src/datasets/coedit_sampled_standardised.csv"
     prefix = ", ".join([sanitize_string(model) for model in models])
-    store_path = f"/home/piyush.sar/Projects/LegalSifter/llm-edit/src/result/{prefix}_result.csv"
+    store_path = f"/home/piyush.sar/Projects/LegalSifter/llm-edit/src/result/{exp_name}_{prefix}_result.csv"
     dataset = load_dataset(dataset_path)
 
     template_dir = "/home/piyush.sar/Projects/LegalSifter/llm-edit/src/templates"
@@ -78,8 +83,8 @@ def run_generation(models):
                 'text': datapoint['content'],
                 'instructions': [
                     {'id': 1, 'task': datapoint["guidance_1"]},
-                    {'id': 2, 'task': datapoint["guidance_2"]},
-                    {'id': 3, 'task': datapoint["guidance_3"]},
+                    # {'id': 2, 'task': datapoint["guidance_2"]},
+                    # {'id': 3, 'task': datapoint["guidance_3"]},
                 ]
             }
             prompt = template.render(data)
@@ -101,4 +106,4 @@ def run_generation(models):
     df.to_csv(store_path, index=False)
 
 if __name__ == "__main__":
-    run_generation(["deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"])
+    run_generation(["google/gemma-2-9b-it"])
