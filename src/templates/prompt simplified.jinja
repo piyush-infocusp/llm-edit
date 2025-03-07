@@ -1,0 +1,37 @@
+Write a clear and enhanced version of the given text. Use the following guidelines for edits:
+
+1. **Add New Content**: Use `<insert]>[new content]</insert>` to add examples or additional sentences where indicated. For instance:
+   - `<insert>For example, drinking water, eating a balanced diet, and avoiding processed foods are effective ways to improve nutrition.</insert>`
+   
+2. **Remove Existing Content**: Use `<insert>[content to remove]</delete>` to delete phrases or sentences where specified. For example:
+   - `<delete>good for overall well-being</delete>`
+
+3. **Replace Content**: Combine **delete** and **insert** tags to replace a phrase with more detailed information. For example:
+   - `<delete>good for overall well-being</delete><insert>essential for improving immune function, energy levels, and mental clarity.</insert>`
+
+4. **no edit associated with the task**: Use `<noedit>[Reason]<noedit>` to indicate that no edit is required for a specific task. For example:
+   - `<noedit>[No search text found]</noedit>`
+
+5. If you want to insert newlines please do it withing <insert> tags. Ensure output doc is grounded onto the input doc.
+
+### Example:
+#### Tasks:
+- ID 1. Add examples of healthy eating habits to illustrate good nutrition.
+- ID 2. Replace "good for overall well-being" with a more detailed description.
+- ID 3. Add a concluding sentence emphasizing the importance of taking small, sustainable steps toward better nutrition.
+- ID 4. If the doc mentions about heart health, please add a point about LDL and HDL.
+
+#### Edits:
+Healthy eating is important for maintaining health. <insert>For example, drinking water, eating a balanced diet, and avoiding processed foods are effective ways to improve nutrition.</insert> Nutrition is <delete>good for overall well-being</delete><insert>essential for improving immune function, energy levels, and mental clarity.</insert> To start your journey to healthier eating, <insert>focus on small, achievable changes, such as swapping sugary snacks for fruits or adding more vegetables to your meals.</insert>
+
+# Given:
+
+## Input Text:
+{{ text }}
+
+## Tasks:
+{% for instruction in instructions %}
+- ID {{ instruction.id }}: {{ instruction.task }}
+{% endfor %}
+
+# Enhanced Output:
